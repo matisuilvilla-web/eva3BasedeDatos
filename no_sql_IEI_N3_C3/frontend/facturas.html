@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listado de Facturas</title>
+
+    <link rel="stylesheet" href="./css/estilos.css">
+    <link rel="stylesheet" href="./css/brite.css">
+    <link href="https://cdn.datatables.net/v/dt/dt-2.3.8/datatables.min.css" rel="stylesheet"
+        integrity="sha384-1BvCnyKidMPIGQGjvMn+w+90hHBhYJtF+R7os4NX2Abe7tSxWQadHRTSH5qb559A" crossorigin="anonymous">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-4.0.0.min.js"
+        integrity="sha256-OaVG6prZf4v69dPg6PhVattBXkcOWQB62pdZ3ORyrao=" crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/v/dt/dt-2.3.8/datatables.min.js"
+        integrity="sha384-kjkli48Tmhwhaghq0IIRm8gFmMdnihfu1ywAOyyGWYMsoZZi/6AX2fWzpsqahoFw"
+        crossorigin="anonymous"></script>
+    <script src="./scripts/facturas.js"></script>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Sistema Gestión Usuarios</a>
+            <button class="navbar-toggler" type="button" data-bs-theme="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="./inicio.html">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./formulario.html">Registro Usuarios</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="./facturas.html">Listado Facturas</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="contenedor_principal container mt-4">
+        <p class="h1">Gestión de Facturas</p>
+        <hr>
+
+        <div class="card p-4 mb-5 bg-light">
+            <p class="h3 mb-3">Registrar Nueva Factura</p>
+            <form id="formularioFactura">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label" for="selectUsuarioFactura">Asociar a Usuario (Relación 1:N):</label>
+                        <select class="form-select" name="usuario" id="selectUsuarioFactura" required>
+                            <option value="" selected>Seleccione el usuario dueño de la factura</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label" for="inputNumeroFactura">Número Factura:</label>
+                        <input class="form-control" type="number" name="numero" id="inputNumeroFactura" required>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label" for="inputMoneda">Moneda:</label>
+                        <select class="form-select" name="moneda" id="inputMoneda">
+                            <option value="CLP" selected>CLP (Peso Chileno)</option>
+                            <option value="USD">USD (Dólar)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label" for="inputProveedor">Proveedor:</label>
+                        <input class="form-control" type="text" name="proveedor" id="inputProveedor" required>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label" for="inputFechaFactura">Fecha Emisión:</label>
+                        <input class="form-control" type="date" name="fecha" id="inputFechaFactura" required>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label" for="selectEstadoFactura">Estado:</label>
+                        <select class="form-select" name="estado" id="selectEstadoFactura" required>
+                            <option value="Pagada">Pagada</option>
+                            <option value="Pendiente">Pendiente</option>
+                            <option value="Anulada">Anulada</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <label class="form-label" for="inputMonto">Monto Neto:</label>
+                        <input class="form-control" type="number" name="monto" id="inputMonto" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label" for="inputImpuesto">Impuesto (IVA):</label>
+                        <input class="form-control" type="number" name="impuesto" id="inputImpuesto" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label" for="selectMetodo">Método de Pago:</label>
+                        <select class="form-select" name="metodoPago" id="selectMetodo" required>
+                            <option value="Transferencia">Transferencia</option>
+                            <option value="Efectivo">Efectivo</option>
+                            <option value="Tarjeta">Tarjeta</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="inputDescripcion">Descripción:</label>
+                    <input class="form-control" type="text" name="descripcion" id="inputDescripcion">
+                </div>
+
+                <div class="d-flex justify-content-end">
+                    <button type="button" class="btn btn-primary" onclick="registrarFactura();">Guardar Factura</button>
+                </div>
+            </form>
+        </div>
+
+        <p class="h2">Historial de Facturas Registradas</p>
+        <hr>
+        <div class="container mb-5">
+            <table id="tablaFacturas" class="display" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>N° Factura</th>
+                        <th>Proveedor</th>
+                        <th>Fecha</th>
+                        <th>Monto Total</th>
+                        <th>Estado</th>
+                        <th>RUT Usuario</th>
+                        <th>Nombre Usuario</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+                <tfoot>
+                    <tr>
+                        <th>N° Factura</th>
+                        <th>Proveedor</th>
+                        <th>Fecha</th>
+                        <th>Monto Total</th>
+                        <th>Estado</th>
+                        <th>RUT Usuario</th>
+                        <th>Nombre Usuario</th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+
+</body>
+
+</html>
